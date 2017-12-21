@@ -82,6 +82,7 @@ int main(void)
 
 	
 	rx_data();
+	SI4432_WriteReg(0x05, 0x00);
 	SI4432_WriteReg(0x06, 0x40);	// Register 06h. Interrupt Enable 2 :   Enable Valid Preamble Detected.
 	
 	

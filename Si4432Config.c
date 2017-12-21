@@ -43,6 +43,39 @@ void SI4432_WriteReg(u8 addr, u8 value)
 		GPIO_SetBits(GPIOA, nSEL);
 }
 
+void tx_RSSI(unsigned char* RSSIdata)
+{
+	unsigned char i;
+	Flag.is_tx = 1;
+	SI4432_WriteReg(0x07, SI4432_PWRSTATE_READY);	// rf Ready mode
+	TX1_RX0;		//TX status
+	delay_ms(5);
+
+  //clear the contents of the RX FIFO
+  //clear the contents of the TX FIFO.
+	SI4432_WriteReg(0x08, 0x03);  // 
+	SI4432_WriteReg(0x08, 0x00);  // ???,?????
+	
+	SI4432_WriteReg(0x34, 40);  // 0x34: set Preamble Length=20bytes
+	SI4432_WriteReg(0x3e, 10);  // 0x3e: Packet Length=10bytes
+  for (i = 0; i<10; i++)
+	{
+		SI4432_WriteReg(0x7f, *(RSSIdata+i)); 	// ????????????
+	}
+	SI4432_WriteReg(0x05, SI4432_PACKET_SENT_INTERRUPT);	// Enable Packet Sent Interrupt
+	SI4432_WriteReg(0x06, 0x00);
+	u8 ItStatus1 = SI4432_ReadReg(0x03);		
+	u8 ItStatus2 = SI4432_ReadReg(0x04);
+	
+	u8 test = GPIO_ReadInputDataBit(GPIOA, nIRQ);
+	SI4432_WriteReg(0x07, SI4432_PWRSTATE_TX);  // ??????
+	//waiting for interrupt
+	while(GPIO_ReadInputDataBit(GPIOA, nIRQ));
+	//tx finished, nIRQ is low.
+	ItStatus1 = SI4432_ReadReg(0x03);		//?????????
+	ItStatus2 = SI4432_ReadReg(0x04);		//?????????
+	test = 0x01;	
+}
 
 void tx_data(void)
 {

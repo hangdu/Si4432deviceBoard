@@ -27,6 +27,7 @@
 #define  SI4432_PACKET_SENT_INTERRUPT	04
 extern u8 dt;
 extern const unsigned char tx_test_data[10];
+
 	 
 typedef struct 
 {
@@ -42,6 +43,7 @@ void SI4432_WriteReg(u8 addr, u8 value);
 void tx_data(void);
 void rx_data(void);
 void SI4432_init(void);
+void tx_RSSI(unsigned char* RSSIdata);
 
 
 
