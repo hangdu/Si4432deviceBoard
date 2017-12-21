@@ -151,6 +151,7 @@ void EXTI1_IRQHandler(void)
 	if(EXTI_GetITStatus(EXTI_Line1) == SET) 
 	{
 		EXTI_ClearITPendingBit(EXTI_Line1);
+		u8 RSSI = SI4432_ReadReg(0x26);
 		u8 ItStatus11 = SI4432_ReadReg(0x03);		
 		u8 ItStatus22 = SI4432_ReadReg(0x04);		
 		unsigned char rx_buf1[15];
@@ -187,6 +188,7 @@ void EXTI1_IRQHandler(void)
 			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		}	
 		rx_data();
+		SI4432_WriteReg(0x06, 0x40);	// Register 06h. Interrupt Enable 2 :   Enable Valid Preamble Detected.
 	}		
 }
 

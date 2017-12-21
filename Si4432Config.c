@@ -117,7 +117,7 @@ void rx_data(void)
 	SI4432_WriteReg(0x08, 0x03);  
 	SI4432_WriteReg(0x08, 0x00);  
 
-	SI4432_WriteReg(0x05, SI4432_Rx_packet_received_interrupt);  // Valid Packet Received Interrupt is enabled		
+//	SI4432_WriteReg(0x05, SI4432_Rx_packet_received_interrupt);  // Valid Packet Received Interrupt is enabled		
 	u8 ItStatus1 = SI4432_ReadReg(0x03);		
 	u8 ItStatus2 = SI4432_ReadReg(0x04);	
 		

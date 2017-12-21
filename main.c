@@ -74,16 +74,17 @@ int main(void)
 	/* Enable SPIy */
   SPI_Cmd(SPIy, ENABLE);
 	
-	
+	EXTI_Configuration();
+	NVIC_Configuration();
 	
 	SI4432_init();
 	TX0_RX0;
 
 	
 	rx_data();
+	SI4432_WriteReg(0x06, 0x40);	// Register 06h. Interrupt Enable 2 :   Enable Valid Preamble Detected.
 	
-	EXTI_Configuration();
-	NVIC_Configuration();
+	
 	unsigned char chksum;
 	unsigned char i;
 	/*
