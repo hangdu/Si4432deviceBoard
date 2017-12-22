@@ -77,6 +77,8 @@ void tx_RSSI(unsigned char* RSSIdata)
 	test = 0x01;	
 }
 
+
+
 void tx_data(void)
 {
 	unsigned char i;
@@ -102,35 +104,11 @@ void tx_data(void)
 	u8 ItStatus2 = SI4432_ReadReg(0x04);
 	
 	u8 test = GPIO_ReadInputDataBit(GPIOA, nIRQ);
-	SI4432_WriteReg(0x07, SI4432_PWRSTATE_TX);  // ??????
-	/*
-	rf_timeout = 0;
-	Flag.rf_reach_timeout = 0;
-	while(nIRQ)		// ????
-	{
-		
-		if(Flag.rf_reach_timeout)
-		{
-			
-			SDN  = 1;		//??0.5??????,?RF???????,??????????
-			delay_1ms(10);
-			SDN = 0;
-			delay_1ms(200);
-			
-			SI4432_init();
-			break;		// ?????
-		}
-			
-	}	
-  	rx_data();		//rf ????,??????
-		*/
-		//waiting for interrupt
-		while(GPIO_ReadInputDataBit(GPIOA, nIRQ));
-		//tx finished, nIRQ is low.
-		ItStatus1 = SI4432_ReadReg(0x03);		//?????????
-		ItStatus2 = SI4432_ReadReg(0x04);		//?????????
-		test = 0x01;
-		
+	SI4432_WriteReg(0x07, SI4432_PWRSTATE_TX);  // ??????	
+	while(GPIO_ReadInputDataBit(GPIOA, nIRQ));
+	//tx finished, nIRQ is low.
+	ItStatus1 = SI4432_ReadReg(0x03);		//?????????
+	ItStatus2 = SI4432_ReadReg(0x04);	
 }
 
 

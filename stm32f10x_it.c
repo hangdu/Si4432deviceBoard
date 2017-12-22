@@ -151,17 +151,20 @@ void EXTI1_IRQHandler(void)
 	if(EXTI_GetITStatus(EXTI_Line1) == SET) 
 	{
 		EXTI_ClearITPendingBit(EXTI_Line1);
+		u8 ItStatus11 = SI4432_ReadReg(0x03);		
+		u8 ItStatus22 = SI4432_ReadReg(0x04);		
+		//Valid Preamble Detected
 		unsigned char RSSI = SI4432_ReadReg(0x26);
+		delay_ms(50);
+		tx_data();		
+		rx_data();
+		SI4432_WriteReg(0x06, 0x40);
 		
-		unsigned char RSSI_data[10] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-		RSSI_data[0] = RSSI;
-		RSSI_data[9] = RSSI;
-		
-		
+			
 		
 		//send RSSI back to the other board.
 		//unsigned char[] RSSIdata;
-		tx_RSSI(RSSI_data);
+	
 		/*
 		u8 ItStatus11 = SI4432_ReadReg(0x03);		
 		u8 ItStatus22 = SI4432_ReadReg(0x04);		
@@ -199,9 +202,6 @@ void EXTI1_IRQHandler(void)
 			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 		}	
 		*/
-		rx_data();
-		SI4432_WriteReg(0x05, 0x00);
-		SI4432_WriteReg(0x06, 0x40);	// Register 06h. Interrupt Enable 2 :   Enable Valid Preamble Detected.
 	}		
 }
 
