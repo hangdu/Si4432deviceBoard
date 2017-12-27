@@ -26,7 +26,7 @@
 #define  SI4432_Rx_packet_received_interrupt   0x02
 #define  SI4432_PACKET_SENT_INTERRUPT	04
 extern u8 dt;
-extern const unsigned char tx_test_data[10];
+extern unsigned char tx_test_data[10];
 
 	 
 typedef struct 
@@ -40,10 +40,10 @@ extern FlagType Flag;
 u8 SPI1_ReadWriteByte(u8 TxData);
 u8 SI4432_ReadReg(u8 addr);
 void SI4432_WriteReg(u8 addr, u8 value);
-void tx_data(void);
+void tx_data(unsigned char RSSI);
 void rx_data(void);
 void SI4432_init(void);
-void tx_RSSI(unsigned char* RSSIdata);
+
 
 
 
