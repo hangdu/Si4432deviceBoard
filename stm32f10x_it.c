@@ -156,6 +156,8 @@ void EXTI1_IRQHandler(void)
 		//Valid Preamble Detected
 		unsigned char RSSI = SI4432_ReadReg(0x26);
 		delay_ms(500);
+		delay_ms(500);
+		delay_ms(500);
 		tx_data(RSSI);		
 		rx_data();
 		SI4432_WriteReg(0x06, 0x40);

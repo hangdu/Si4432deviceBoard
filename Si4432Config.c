@@ -91,6 +91,9 @@ void tx_data(unsigned char RSSI)
 	ItStatus1 = SI4432_ReadReg(0x03);		//?????????
 	ItStatus2 = SI4432_ReadReg(0x04);	
 	EXTI_ClearITPendingBit(EXTI_Line1);
+	GPIO_ResetBits(GPIOC, GPIO_Pin_13);
+	delay_ms(500);
+	GPIO_SetBits(GPIOC, GPIO_Pin_13);	
 }
 
 
